@@ -1,0 +1,15 @@
+trigger:
+  - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: charleszipp.azure-pipelines-tasks-terraform.terraform-installer@0
+    inputs:
+      terraformVersion: 'latest'
+
+  - script: |
+      terraform init
+      terraform validate
+    displayName: 'Terraform Init and Validate'
