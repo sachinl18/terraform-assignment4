@@ -1,0 +1,25 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  name: terraform-self-hosted
+
+stages:
+- stage: Initialize
+  jobs:
+  - job: TerraformInitializeJob
+    steps:
+     - script: terraform init
+       displayName: 'terraform init'
+
+- stage: Validate
+  jobs:
+  - job: TerraformValidateJob
+    steps:
+     - script: terraform validate
+       displayName: 'terraform validate'
