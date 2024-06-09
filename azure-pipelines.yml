@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
 
@@ -14,12 +9,25 @@ stages:
   jobs:
   - job: TerraformInitializeJob
     steps:
-     - script: terraform init
-       displayName: 'terraform init'
+    - script: |
+        #!/bin/bash
+        # Check if terraform is installed
+        if ! [ -x "$(command -v terraform)" ]; then
+          echo 'Terraform is not installed. Installing now...'
+          sudo snap install terraform --classic
+        else
+          echo 'Terraform is already installed.'
+        fi
+        # Display terraform version
+        terraform -v
+      displayName: 'Install Terraform if not present'
+
+    - script: terraform init
+      displayName: 'terraform init'
 
 - stage: Validate
   jobs:
   - job: TerraformValidateJob
     steps:
-     - script: terraform validate
-       displayName: 'terraform validate'
+    - script: terraform validate
+      displayName: 'terraform validate'
