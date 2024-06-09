@@ -7,7 +7,7 @@ trigger:
 - main
 
 pool:
-  name: terraform-self-hosted
+  name: selfhostedforterraform
 
 stages:
 - stage: Initialize
